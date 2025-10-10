@@ -1,0 +1,19 @@
+# Server
+server/target/
+server/*.jar
+server/src/main/resources/application.properties
+
+# Client  
+client/node_modules/
+client/build/
+client/dist/
+
+
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*.un~
+*.log
+.cache/
