@@ -62,8 +62,8 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
 
-
-        String token = jwtUtils.generateJwtToken(savedUser.getUsername(), savedUser.getRole().name());
+        String token = jwtUtils.generateJwtToken(user.getEmail(), user.getRole().name());
+        // String token = jwtUtils.generateJwtToken(savedUser.getUsername(), savedUser.getRole().name());
 
 
         return new AuthResponse(
@@ -78,21 +78,21 @@ public class AuthService {
  
     public AuthResponse login(LoginRequest request) {
       
-        Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
+        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
 
         if (userOptional.isEmpty()) {
-            throw new RuntimeException("Invalid username or password");
+            throw new RuntimeException("Invalid email or password");
         }
 
         User user = userOptional.get();
 
   
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid username or password");
+            throw new RuntimeException("Invalid email or password");
         }
 
 
-        String token = jwtUtils.generateJwtToken(user.getUsername(), user.getRole().name());
+        String token = jwtUtils.generateJwtToken(user.getEmail(), user.getRole().name());
 
 
         return new AuthResponse(

@@ -11,6 +11,9 @@ import About from './components/About/About'
 import Contact from './components/Contact/Contact'
 import Details from './components/Details/Details'
 import NotFound from './components/NotFound/NotFound'
+import Login from './components/Auth/Login'
+import Register from './components/Auth/Register'
+// import Auth from './components/Auth/Auth'
 
 function App() {
 
@@ -24,6 +27,8 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           <Route path="/menu/:id" element={<Details />} />
           <Route path="*" element={<NotFound />} />

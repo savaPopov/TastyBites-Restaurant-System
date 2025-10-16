@@ -40,6 +40,18 @@ const Header = () => {
                 <span className="cart-badge">{getTotalItems()}</span>
               )}
             </Link>
+            {/* {user ? (
+              <>
+                <span className="user-greeting">Hi, {user.name}</span>
+                <button onClick={logout} className="btn btn-outline btn-lg">
+                  Logout
+                </button>
+              </>
+            ) : ( */}
+              <Link to="/login" className="btn btn-hero btn-lg">
+                Sign In
+              </Link>
+            {/* )} */}
           </div>
         </div>
       </div>

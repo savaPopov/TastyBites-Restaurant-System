@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
+                String username = jwtUtils.getEmailFromJwtToken(jwt);
                 String role = jwtUtils.getRoleFromJwtToken(jwt);
 
                 List<GrantedAuthority> authorities = new ArrayList<>();
