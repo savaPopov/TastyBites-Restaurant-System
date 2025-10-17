@@ -32,15 +32,35 @@ export default async function requester(method, url, data) {
     return
   }
 
-  const result = await response.json()
+  const contentType = response.headers.get('content-type')
+  const hasJson = contentType && contentType.includes('application/json')
+
+  if (!hasJson) {
+ 
+    if (response.ok) {
+      return null
+    } else {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+    }
+  }
+
+
+  let result;
+  try {
+    result = await response.json()
+  } catch (jsonError) {
+    console.error('JSON parse error:', jsonError)
+    throw new Error('Invalid JSON response from server')
+  }
 
   if (!response.ok) {
-    console.log(result)
+    console.log('API error:', result)
     throw result
   }
 
   return result
 }
+
 
 function get(url) {
   return requester('GET', url)

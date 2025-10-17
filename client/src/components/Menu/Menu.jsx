@@ -3,6 +3,7 @@ import { Search, Plus, Minus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import './Menu.css';
 import { useNavigate } from 'react-router-dom';
+import { getAllMenuItems } from '../../api/menu-api';
 
 
 const CATEGORIES = [
@@ -14,29 +15,29 @@ const CATEGORIES = [
 ];
 
 export const Menu = () => {
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [menuItems, setMenuItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const { addToCart, getItemQuantity, updateQuantity } = useCart();
   const navigate = useNavigate();
+
+
   const handleCardClick = (itemId) => {
     navigate(`/menu/${itemId}`);
   };
 
-
   useEffect(() => {
-    fetch('http://localhost:8080/api/menu')
-      .then(res => res.json())
-      .then(data =>{
-        console.log('Fetched menu:', data); // check the property names
-        setMenuItems(data);
-      } )
-      .catch(err => console.error(err));
+    async function fetchData() {
+      const data = await getAllMenuItems()
 
-    // console.log(data)
-  }, []);
+      setMenuItems(data)
 
+    }
 
+    fetchData();
+
+  }, [])
 
   const filteredItems = useMemo(() => {
     return menuItems.filter(item => {

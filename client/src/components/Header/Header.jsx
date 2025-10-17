@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { useCart } from "../../context/CartContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 const Header = () => {
+
   const { getTotalItems } = useCart();
+  const { username, isAuthenticated, localLogout } = useAuthContext();
+
+
+  const handleLogout = () => {
+    localLogout();
+
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -32,7 +42,7 @@ const Header = () => {
             </Link>
           </nav>
 
-  {/* button */}
+          {/* button */}
           <div className="header-actions">
             <Link to="/cart" className="cart-button">
               <span className="cart-icon">🛒</span>
@@ -40,18 +50,19 @@ const Header = () => {
                 <span className="cart-badge">{getTotalItems()}</span>
               )}
             </Link>
-            {/* {user ? (
+
+            {isAuthenticated ? (
               <>
-                <span className="user-greeting">Hi, {user.name}</span>
-                <button onClick={logout} className="btn btn-outline btn-lg">
+                <span className="user-greeting">Hi, {username}</span>
+                <button onClick={handleLogout} className="btn btn-outline btn-lg">
                   Logout
                 </button>
               </>
-            ) : ( */}
-              <Link to="/login" className="btn btn-hero btn-lg">
-                Sign In
-              </Link>
-            {/* )} */}
+            ) : (<Link to="/login" className="btn btn-hero btn-lg">
+              Sign In
+            </Link>)}
+
+
           </div>
         </div>
       </div>

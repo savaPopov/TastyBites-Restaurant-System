@@ -35,50 +35,6 @@ const Login = () => {
     }
   }
 
-  const testLogin = async (email, password) => {
-    try {
-      console.log('🔧 Direct fetch test with:', { 
-        email: `'${email}'`, 
-        password: `'${password}'`,
-        emailLength: email.length,
-        passwordLength: password.length
-      });
-      
-      const payload = {
-        email: email,
-        password: password
-      };
-      
-      console.log('📤 Sending payload:', JSON.stringify(payload));
-      
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-      
-      console.log('📨 Response status:', response.status);
-      console.log('📨 Response headers:', response.headers);
-      
-      const result = await response.json();
-      console.log('📨 Response body:', result);
-      
-      if (response.ok) {
-        console.log('✅ Direct login successful!');
-        navigate('/');
-      } else {
-        console.log('❌ Direct login failed:', result);
-        setSubmitError(result.message);
-      }
-    } catch (err) {
-      console.log('❌ Direct fetch error:', err);
-      setSubmitError(err.message);
-    }
-  }
-
-
   return (
     <div className="auth-page">
       <main className="auth-main">
