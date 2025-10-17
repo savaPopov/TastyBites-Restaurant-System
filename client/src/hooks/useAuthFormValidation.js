@@ -26,7 +26,7 @@ export const validationRules = {
   }
 };
 
-export const useFormValidation = (values) => {
+export const useAuthFormValidation = (values) => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 

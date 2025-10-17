@@ -41,7 +41,7 @@ const Details = () => {
             <div className="details-container">
                 <div className="container py-8">
                     <button
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/menu')}
                         className="btn btn-secondary mb-4"
                     >
                         <ArrowLeft className="h-4 w-4 mr-2" />
@@ -64,7 +64,7 @@ const Details = () => {
             <div className="details-container">
                 <div className="container py-8">
                     <button
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/menu')}
                         className="btn btn-secondary mb-4"
                     >
                         <ArrowLeft className="h-4 w-4 mr-2" />
@@ -81,7 +81,7 @@ const Details = () => {
         <div className="details-container">
             <div className="container py-8">
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/menu')}
                     className="btn btn-secondary mb-6"
                 >
                     <ArrowLeft className="h-4 w-4 mr-2" />

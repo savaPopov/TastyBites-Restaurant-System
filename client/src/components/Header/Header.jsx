@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useCart } from "../../context/CartContext";
 import { useAuthContext } from "../../context/AuthContext";
 
+
 const Header = () => {
 
   const { getTotalItems } = useCart();
-  const { username, isAuthenticated, localLogout } = useAuthContext();
+  const { username, isAuthenticated, localLogout, role } = useAuthContext();
+  const navigate = useNavigate();
 
 
   const handleLogout = () => {
     localLogout();
-
+    navigate('/');
   };
 
   return (
@@ -40,6 +42,14 @@ const Header = () => {
             <Link to="/contact" className="header-nav-link">
               Contact
             </Link>
+
+            {/* Admin Control Panel Link - Only visible to admins */}
+            {role === 'ADMIN' && (
+              <Link to="/admin/controlPanel" className="header-nav-link admin-link">
+                Control Panel
+              </Link>
+            )}
+
           </nav>
 
           {/* button */}

@@ -39,11 +39,12 @@ public class MenuItemRepositoryImpl implements MenuItemRepository {
 
     @Override
     public void addMenuItem(MenuItem item) {
-        String sql = "INSERT INTO menu_items (name, description, price, spicy, vegetarian, image_url) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO menu_items (name, description, price,category, spicy, vegetarian, image_url) VALUES (?, ?, ?,?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 item.getName(),
                 item.getDescription(),
                 item.getPrice(),
+                item.getCategory(),
                 item.isSpicy(),
                 item.isVegetarian(),
                 item.getImageUrl());

@@ -5,6 +5,7 @@ import com.purlenki.server.repository.implementations.MenuItemRepositoryImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.List;
@@ -41,6 +42,7 @@ public class MenuController {
     }
 
     // POST new menu item
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<String> addMenuItem(@RequestBody MenuItem menuItem) {
         try {
@@ -53,6 +55,7 @@ public class MenuController {
     }
 
     // PUT update menu item
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateMenuItem(@PathVariable int id, @RequestBody MenuItem menuItem) {
         try {
@@ -66,6 +69,7 @@ public class MenuController {
     }
 
     // DELETE menu item
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMenuItem(@PathVariable int id) {
         try {

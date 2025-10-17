@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRegister } from '../../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { useFormValidation } from '../../hooks/useFormValidation';
+import { useAuthFormValidation } from '../../hooks/useAuthFormValidation';
 
 const initialValues = { username: '', email: '', password: '', repassword: '' }; // Fixed
 
@@ -13,7 +13,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const { values, changeHandler, submitHandler } = useForm(initialValues, registerHandler);
-  const { errors, touched, handleBlur, markAllTouched, isFormValid } = useFormValidation(values);
+  const { errors, touched, handleBlur, markAllTouched, isFormValid } = useAuthFormValidation(values);
 
   async function registerHandler(formValues) {
     const formErrors = markAllTouched();

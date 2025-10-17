@@ -13,7 +13,11 @@ import Details from './components/Details/Details'
 import NotFound from './components/NotFound/NotFound'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
-// import Auth from './components/Auth/Auth'
+import ControlPanel from './components/Admin/ControlPanel/ControlPanel'
+import AdminGuard from './components/common/AdminGuard'
+import GuestGuard from './components/common/GuestGuard'
+
+
 
 function App() {
 
@@ -27,8 +31,15 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+
+          <Route element={<GuestGuard />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          <Route element={<AdminGuard />}>
+            <Route path="/admin/controlPanel" element={<ControlPanel />} />
+          </Route>
 
           <Route path="/menu/:id" element={<Details />} />
           <Route path="*" element={<NotFound />} />

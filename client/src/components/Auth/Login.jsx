@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useAuthFormValidation } from "../../hooks/useAuthFormValidation";
 import "./Auth.css";
 import { useLogin } from "../../hooks/useAuth";
 
@@ -17,7 +17,7 @@ const Login = () => {
   const { values, changeHandler, submitHandler } = useForm(initialValues, loginHandler);
 
 
-  const { errors, touched, handleBlur, markAllTouched, isFormValid } = useFormValidation(values);
+  const { errors, touched, handleBlur, markAllTouched, isFormValid } = useAuthFormValidation(values);
 
   async function loginHandler(formValues) {
 
