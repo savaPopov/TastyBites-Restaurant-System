@@ -4,7 +4,7 @@ import { ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import './Details.css';
 import { getMenuItemById } from '../../api/menu-api';
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../Spinner/Spinner';
 
 const Details = () => {
     const { id } = useParams();
@@ -70,7 +70,7 @@ const Details = () => {
                         <ArrowLeft className="h-4 w-4 mr-2" />
                         Back to Menu
                     </button>
-                    <h1>Item not found</h1>
+                    <h1>{error}</h1>
                 </div>
             </div>
         );
