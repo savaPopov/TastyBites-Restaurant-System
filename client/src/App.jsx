@@ -16,6 +16,7 @@ import Register from './components/Auth/Register'
 import ControlPanel from './components/Admin/ControlPanel/ControlPanel'
 import AdminGuard from './components/common/AdminGuard'
 import GuestGuard from './components/common/GuestGuard'
+import EditMenuItem from './components/Admin/EditMenuItem/EditMenuItem'
 
 
 
@@ -36,7 +37,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
-
+          <Route path="/edit" element={<EditMenuItem />} />
           <Route element={<AdminGuard />}>
             <Route path="/admin/controlPanel" element={<ControlPanel />} />
           </Route>

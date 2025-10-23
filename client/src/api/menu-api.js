@@ -22,3 +22,7 @@ export async function getMenuItemById(menuItemId) {
 export function create(menuData) {
     return api.post(BASE_URL, menuData)
 }
+
+export function update(id, menuData) {
+    return api.put(`${BASE_URL}/${id}`, menuData);
+}
