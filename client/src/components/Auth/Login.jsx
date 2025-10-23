@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { useAuthFormValidation } from "../../hooks/useAuthFormValidation";
 import "./Auth.css";
 import { useLogin } from "../../hooks/useAuth";
+import { useAuthContext } from "../../context/AuthContext";
 
 const initialValues = { email: '', password: '' };
 
@@ -11,6 +12,16 @@ const Login = () => {
   const [submitError, setSubmitError] = useState("");
   const login = useLogin();
   const navigate = useNavigate();
+  const { isAuthenticated, changeAuthState } = useAuthContext();
+
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     console.log('auth  state updated, navigating to /menu');
+  //     navigate("/menu");
+  //   }
+  // }, [isAuthenticated, navigate]);
+
 
 
 
@@ -24,12 +35,14 @@ const Login = () => {
     const formErrors = markAllTouched();
     if (Object.values(formErrors).some(error => error)) return;
 
+
     try {
 
-      
-      // await testLogin(formValues.email,formValues.password);
       await login(formValues.email, formValues.password);
-      navigate("/");
+      flushSync(() => {
+        navigate("/menu");
+      });
+      
     } catch (err) {
       setSubmitError('Invalid email or password. Please try again.');
     }

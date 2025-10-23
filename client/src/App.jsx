@@ -17,6 +17,7 @@ import ControlPanel from './components/Admin/ControlPanel/ControlPanel'
 import AdminGuard from './components/common/AdminGuard'
 import GuestGuard from './components/common/GuestGuard'
 import EditMenuItem from './components/Admin/EditMenuItem/EditMenuItem'
+import UserGuard from './components/common/UserGuard'
 
 
 
@@ -28,21 +29,30 @@ function App() {
       <div style={{ minHeight: "100vh", backgroundColor: "var(--background)" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/menu/:id" element={<Details />} />
 
+          {/* GUEST ONLY */}
           <Route element={<GuestGuard />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
+
           <Route path="/edit" element={<EditMenuItem />} />
+          {/* ADMIN ONLY */}
           <Route element={<AdminGuard />}>
             <Route path="/admin/controlPanel" element={<ControlPanel />} />
           </Route>
+          {/* USER ONLY */}
+          <Route element={<UserGuard />}>
+            <Route path="/cart" element={<Cart />} />
+          </Route>
 
-          <Route path="/menu/:id" element={<Details />} />
+
+
+
           <Route path="*" element={<NotFound />} />
 
         </Routes>

@@ -4,7 +4,8 @@ const BASE_URL = 'http://localhost:8080/api/auth'
 
 export async function login(email, password) {
   const result = await api.post(`${BASE_URL}/login`, { email, password })
-
+  // console.log("result from login")
+  // console.log(result)
   return result
 }
 

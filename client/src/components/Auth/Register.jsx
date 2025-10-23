@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useAuthFormValidation } from '../../hooks/useAuthFormValidation';
 
-const initialValues = { username: '', email: '', password: '', repassword: '' }; // Fixed
+const initialValues = { username: '', email: '', password: '', repassword: '' };
 
 const Register = () => {
   const [submitError, setSubmitError] = useState('');
@@ -22,7 +22,7 @@ const Register = () => {
     try {
       const { username, email, password } = formValues;
       await register(username, email, password);
-      navigate('/');
+      navigate('/menu');
     } catch (err) {
       if (err.error?.code === 409) {
         setSubmitError(err.error.message);

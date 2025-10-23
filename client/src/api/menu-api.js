@@ -15,8 +15,10 @@ export async function getAllMenuItems() {
 
 export async function getMenuItemById(menuItemId) {
     const result = await api.get(`${BASE_URL}/${menuItemId}`)
+    result
 
     return result
+
 }
 
 export function create(menuData) {

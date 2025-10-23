@@ -7,7 +7,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import { AuthContextProvider } from './context/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
         <CartProvider>
@@ -15,5 +15,5 @@ createRoot(document.getElementById('root')).render(
         </CartProvider>
       </AuthContextProvider>
     </BrowserRouter>
-  </StrictMode>,
+  // </StrictMode>,
 )

@@ -6,13 +6,19 @@ import { useAuthContext } from "../../context/AuthContext";
 
 const Header = () => {
 
-  const { getTotalItems } = useCart();
-  const { username, isAuthenticated, localLogout, role } = useAuthContext();
+  const { getTotalItems, clearCart } = useCart();
+  const { username, isAuthenticated, localLogout, role, accessToken } = useAuthContext();
   const navigate = useNavigate();
+  let isUser;
 
+  if (role === "USER") {
+    isUser = true;
+  }
 
   const handleLogout = () => {
+    // console.log(accessToken)
     localLogout();
+    clearCart();
     navigate('/');
   };
 
@@ -20,7 +26,7 @@ const Header = () => {
     <header className="header">
       <div className="header-container">
         <div className="header-content">
-          {/* Logo */}
+
           <div className="header-logo">
             <div className="header-logo-icon">
               <span className="header-logo-emoji">🍔</span>
@@ -28,7 +34,7 @@ const Header = () => {
             <span className="header-logo-text">Tasty Bites</span>
           </div>
 
-          {/* Navigation */}
+
           <nav className="header-nav">
             <Link to="/" className="header-nav-link">
               Home
@@ -43,7 +49,7 @@ const Header = () => {
               Contact
             </Link>
 
-            {/* Admin Control Panel Link - Only visible to admins */}
+
             {role === 'ADMIN' && (
               <Link to="/admin/controlPanel" className="header-nav-link admin-link">
                 Control Panel
@@ -52,14 +58,15 @@ const Header = () => {
 
           </nav>
 
-          {/* button */}
+
           <div className="header-actions">
-            <Link to="/cart" className="cart-button">
-              <span className="cart-icon">🛒</span>
-              {getTotalItems() > 0 && (
-                <span className="cart-badge">{getTotalItems()}</span>
-              )}
-            </Link>
+            {isUser && (
+              <Link to="/cart" className="cart-button">
+                <span className="cart-icon">🛒</span>
+                {getTotalItems() > 0 && (
+                  <span className="cart-badge">{getTotalItems()}</span>
+                )}
+              </Link>)}
 
             {isAuthenticated ? (
               <>

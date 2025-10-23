@@ -8,7 +8,6 @@ export function useLogin() {
 
   async function loginHandler(email, password) {
     const result = await login(email, password)
-
     changeAuthState(result)
 
     return result
