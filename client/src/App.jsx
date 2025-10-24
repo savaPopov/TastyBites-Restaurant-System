@@ -40,10 +40,11 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Route>
 
-          <Route path="/edit" element={<EditMenuItem />} />
+        
           {/* ADMIN ONLY */}
           <Route element={<AdminGuard />}>
             <Route path="/admin/controlPanel" element={<ControlPanel />} />
+            <Route path="/edit/:id" element={<EditMenuItem />} />
           </Route>
           {/* USER ONLY */}
           <Route element={<UserGuard />}>

@@ -1,3 +1,4 @@
+import { getAccessToken } from "../util";
 import { api } from "./requester";
 
 const BASE_URL = 'http://localhost:8080/api/menu'
@@ -27,4 +28,11 @@ export function create(menuData) {
 
 export function update(id, menuData) {
     return api.put(`${BASE_URL}/${id}`, menuData);
+}
+
+export function remove(menuid) {
+
+    return api.del(`${BASE_URL}/${menuid}`)
+
+
 }

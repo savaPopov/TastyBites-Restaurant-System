@@ -9,7 +9,7 @@ const Home = () => {
     <section className="hero" id="home">
       <div className="hero-container">
         <div className="hero-grid">
-          {/* Hero Content */}
+       
           <div className="hero-content">
             <div className="hero-text">
               <h1 className="hero-title">
@@ -27,9 +27,7 @@ const Home = () => {
               <Link to="/menu" className="btn btn-hero btn-lg">
                 Order Now
               </Link>
-              {/* <a href="#menu" className="btn btn-outline btn-lg">
-                View Menu
-              </a> */}
+            
             </div>
 
             <div className="hero-stats">
@@ -48,7 +46,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Food Gallery */}
+         
           <div className="hero-gallery">
             <div className="hero-gallery-grid">
               <div className="hero-gallery-card">
@@ -74,7 +72,7 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Floating elements */}
+          
             <div className="hero-floating-element">
               🔥
             </div>

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, Edit, Trash2 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import './Details.css';
-import { getMenuItemById } from '../../api/menu-api';
+import { getMenuItemById, remove } from '../../api/menu-api';
 import Spinner from '../Spinner/Spinner';
+import { useAuthContext } from '../../context/AuthContext';
+import DeleteMenuItemModal from '../Admin/DeleteMenuItemModal/DeleteMenuItemModal';
 
 const Details = () => {
     const { id } = useParams();
@@ -13,6 +15,40 @@ const Details = () => {
     const [item, setMenuItem] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { isAuthenticated, role } = useAuthContext();
+    const [isModalOpen, setModalOpen] = useState(false);
+
+
+    async function deleteConfirmHandler() {
+        try {
+            await remove(id)
+
+            navigate('/menu')
+            setModalOpen(false)
+        } catch (err) {
+            console.log(err.message)
+        }
+
+    }
+
+    function addToCartHandler(item) {
+        if (!isAuthenticated) {
+            navigate('/login')
+            return;
+        }
+
+        addToCart(item)
+
+    }
+
+    function handleEdit() {
+        navigate(`/edit/${id}`)
+    }
+
+    function handleDelete() {
+        setModalOpen(true)
+    }
+
 
     useEffect(() => {
         async function fetchData() {
@@ -121,33 +157,58 @@ const Details = () => {
                             </span>
                         </div>
 
-                        <div className="details-actions">
-                            {quantity > 0 ? (
-                                <div className="quantity-controls">
-                                    <button
-                                        className="btn quantity-btn"
-                                        onClick={() => updateQuantity(item.id, quantity - 1)}
-                                    >
-                                        <Minus className="h-4 w-4" />
-                                    </button>
-                                    <span className="quantity-display">{quantity}</span>
-                                    <button
-                                        className="btn btn-primary quantity-btn"
-                                        onClick={() => addToCart(item)}
-                                    >
-                                        <Plus className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            ) : (
+
+                        {role === 'ADMIN' && (
+                            <div className="details-actions admin-controls">
                                 <button
-                                    onClick={() => addToCart(item)}
-                                    className="btn btn-primary add-to-cart-btn"
+                                    onClick={handleEdit}
+                                    className="btn btn-default btn-default-size"
                                 >
-                                    <Plus className="h-4 w-4 mr-2" />
-                                    Add to Cart
+                                    <Edit className="h-4 w-4 mr-2" />
+                                    Edit Item
                                 </button>
-                            )}
-                        </div>
+                                <button
+                                    onClick={handleDelete}
+                                    className="btn btn-outline btn-default-size"
+                                >
+                                    <Trash2 className="h-4 w-4 mr-2" />
+                                    Delete Item
+                                </button>
+                            </div>
+                        )}
+
+                        <DeleteMenuItemModal isOpen={isModalOpen} itemName={item.name} onConfirm={deleteConfirmHandler} onCancel={() => setModalOpen(false)} />
+
+                        {role !== 'ADMIN' &&
+                            <div className="details-actions">
+                                {quantity > 0 ? (
+                                    <div className="quantity-controls">
+                                        <button
+                                            className="btn quantity-btn"
+                                            onClick={() => updateQuantity(item.id, quantity - 1)}
+                                        >
+                                            <Minus className="h-4 w-4" />
+                                        </button>
+                                        <span className="quantity-display">{quantity}</span>
+                                        <button
+                                            className="btn btn-primary quantity-btn"
+                                            onClick={() => addToCart(item)}
+                                        >
+                                            <Plus className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <button
+                                        onClick={() => addToCartHandler(item)}
+                                        className="btn btn-primary add-to-cart-btn"
+                                    >
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        Add to Cart
+                                    </button>
+                                )}
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
