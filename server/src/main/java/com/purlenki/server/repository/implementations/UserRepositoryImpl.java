@@ -9,14 +9,15 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
-
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -28,6 +29,41 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll() {
         String sql = "SELECT * FROM users ORDER BY created_at DESC";
         return jdbcTemplate.query(sql, new UserRowMapper());
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+
+        long total = count();
+
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+
+        String sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        List<User> users = jdbcTemplate.query(sql, new UserRowMapper(),
+                pageable.getPageSize(), offset);
+
+        return new PageImpl<>(users, pageable, total);
+    }
+
+    @Override
+    public Page<User> searchUsers(String keyword, Pageable pageable) {
+
+        String countSql = "SELECT COUNT(*) FROM users WHERE username LIKE ? OR email LIKE ?";
+        String searchPattern = "%" + keyword + "%";
+        Long total = jdbcTemplate.queryForObject(countSql, Long.class, searchPattern, searchPattern);
+
+        if (total == null)
+            total = 0L;
+
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+
+        String sql = "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? " +
+                "ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        List<User> users = jdbcTemplate.query(sql, new UserRowMapper(),
+                searchPattern, searchPattern,
+                pageable.getPageSize(), offset);
+
+        return new PageImpl<>(users, pageable, total);
     }
 
     @Override
@@ -100,7 +136,6 @@ public class UserRepositoryImpl implements UserRepository {
         }, keyHolder);
 
         user.setId(keyHolder.getKey().longValue());
-
 
         return findById(user.getId()).orElse(user);
     }

@@ -12,9 +12,9 @@ public interface MenuItemRepository {
 
     // List<MenuItem> findByCategory(String category);//TODO 
 
-    void addMenuItem(MenuItem menuItem);
+    MenuItem addMenuItem(MenuItem menuItem);
 
-    void updateMenuItem(MenuItem menuItem);
+    MenuItem updateMenuItem(MenuItem menuItem);
 
     void deleteMenuItem(int id);
 

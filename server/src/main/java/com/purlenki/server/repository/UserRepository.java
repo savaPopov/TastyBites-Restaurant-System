@@ -1,12 +1,17 @@
 package com.purlenki.server.repository;
-
 import com.purlenki.server.model.User;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserRepository {
 
     List<User> findAll();
+
+    Page<User> findAll(Pageable pageable);
+
+    Page<User> searchUsers(String keyword, Pageable pageable);
 
     Optional<User> findById(Long id);
 
