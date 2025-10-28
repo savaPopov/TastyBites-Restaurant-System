@@ -48,10 +48,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/menu/**").permitAll()
                         .requestMatchers("images/**").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/api/menu/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/menu/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/menu/**").authenticated()
+                        .requestMatchers("/api/admin/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/menu/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/menu/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/menu/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated());
 

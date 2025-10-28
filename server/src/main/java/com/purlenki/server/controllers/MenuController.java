@@ -1,7 +1,6 @@
 package com.purlenki.server.controllers;
 
 import com.purlenki.server.model.MenuItem;
-import com.purlenki.server.repository.implementations.MenuItemRepositoryImpl;
 import com.purlenki.server.service.MenuService;
 
 import org.springframework.beans.factory.annotation.Autowired;

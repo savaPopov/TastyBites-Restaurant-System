@@ -135,7 +135,13 @@ public class UserRepositoryImpl implements UserRepository {
             return ps;
         }, keyHolder);
 
-        user.setId(keyHolder.getKey().longValue());
+        Number key = keyHolder.getKey();
+
+        if (key == null) {
+            throw new RuntimeException("failed to save user - no ID generated");
+        }
+
+        user.setId(key.longValue());
 
         return findById(user.getId()).orElse(user);
     }
