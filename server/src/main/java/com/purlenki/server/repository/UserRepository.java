@@ -32,5 +32,4 @@ public interface UserRepository {
 
     boolean deleteById(Long id);
 
-    long count();
 }

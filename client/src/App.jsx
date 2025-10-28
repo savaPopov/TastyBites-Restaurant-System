@@ -67,7 +67,7 @@ function App() {
         position="top-right"
         duration={4000}
         closeButton={true}
-        // richColors={true}
+        richColors={true}
         toastOptions={{
           style: {
             background: 'hsl(var(--background))',

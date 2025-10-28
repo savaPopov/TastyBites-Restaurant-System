@@ -34,7 +34,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Page<User> findAll(Pageable pageable, String excludeEmail) {
 
-        long total = count();
+        String countSql = "SELECT COUNT(*) FROM users WHERE email != ?";
+        Long total = jdbcTemplate.queryForObject(countSql, Long.class, excludeEmail);
+        if (total == null) {
+            total = 0L;
+        }
 
         int offset = pageable.getPageNumber() * pageable.getPageSize();
 
@@ -48,12 +52,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Page<User> searchUsers(String keyword, Pageable pageable, String excludeEmail) {
 
-        String countSql = "SELECT COUNT(*) FROM users WHERE username LIKE ? OR email LIKE ?";
+        String countSql = "SELECT COUNT(*) FROM users WHERE (username LIKE ? OR email LIKE ?) AND email != ? ";
         String searchPattern = "%" + keyword + "%";
-        Long total = jdbcTemplate.queryForObject(countSql, Long.class, searchPattern, searchPattern);
+        Long total = jdbcTemplate.queryForObject(countSql, Long.class, searchPattern, searchPattern, excludeEmail);
 
-        if (total == null)
+        if (total == null) {
             total = 0L;
+        }
 
         int offset = pageable.getPageNumber() * pageable.getPageSize();
 
@@ -169,13 +174,6 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "DELETE FROM users WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, id);
         return rowsAffected > 0;
-    }
-
-    @Override
-    public long count() {
-        String sql = "SELECT COUNT(*) FROM users";
-        Long count = jdbcTemplate.queryForObject(sql, Long.class);
-        return count != null ? count : 0L;
     }
 
     private static class UserRowMapper implements RowMapper<User> {
