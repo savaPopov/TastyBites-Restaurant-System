@@ -13,24 +13,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Page<User> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable);
+    public Page<User> getAllUsers(Pageable pageable, String currentUserEmail) {
+        return userRepository.findAll(pageable, currentUserEmail);
     }
 
-    public Page<User> searchUsers(String keyword, Pageable pageable) {
+    public Page<User> searchUsers(String keyword, Pageable pageable, String currentUserEmail) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            return Page.empty(pageable);
+            return getAllUsers(pageable, currentUserEmail);
         }
-        
+
         String trimmedKeyword = keyword.trim();
-        
 
         if (trimmedKeyword.length() < 2) {
             return Page.empty(pageable);
         }
-        
-        return userRepository.searchUsers(trimmedKeyword, pageable);
+
+        return userRepository.searchUsers(trimmedKeyword, pageable, currentUserEmail);
     }
 
     public void deleteUser(Long id) {
@@ -41,8 +40,8 @@ public class UserService {
 
     public User updateUserRole(Long id, User.Role newRole) {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
-        
+                .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
+
         user.setRole(newRole);
         return userRepository.update(user);
     }

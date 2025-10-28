@@ -32,21 +32,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
+    public Page<User> findAll(Pageable pageable, String excludeEmail) {
 
         long total = count();
 
         int offset = pageable.getPageNumber() * pageable.getPageSize();
 
-        String sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?";
-        List<User> users = jdbcTemplate.query(sql, new UserRowMapper(),
+        String sql = "SELECT * FROM users WHERE email != ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        List<User> users = jdbcTemplate.query(sql, new UserRowMapper(), excludeEmail,
                 pageable.getPageSize(), offset);
 
         return new PageImpl<>(users, pageable, total);
     }
 
     @Override
-    public Page<User> searchUsers(String keyword, Pageable pageable) {
+    public Page<User> searchUsers(String keyword, Pageable pageable, String excludeEmail) {
 
         String countSql = "SELECT COUNT(*) FROM users WHERE username LIKE ? OR email LIKE ?";
         String searchPattern = "%" + keyword + "%";
@@ -57,10 +57,10 @@ public class UserRepositoryImpl implements UserRepository {
 
         int offset = pageable.getPageNumber() * pageable.getPageSize();
 
-        String sql = "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? " +
+        String sql = "SELECT * FROM users WHERE (username LIKE ? OR email LIKE ?) AND email != ? " +
                 "ORDER BY created_at DESC LIMIT ? OFFSET ?";
         List<User> users = jdbcTemplate.query(sql, new UserRowMapper(),
-                searchPattern, searchPattern,
+                searchPattern, searchPattern, excludeEmail,
                 pageable.getPageSize(), offset);
 
         return new PageImpl<>(users, pageable, total);

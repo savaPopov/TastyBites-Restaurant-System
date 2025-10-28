@@ -6,6 +6,7 @@ import { useForm } from "../../../hooks/useForm";
 import { getMenuItemById, update } from "../../../api/menu-api";
 import Spinner from "../../Spinner/Spinner";
 import { useAuthContext } from "../../../context/AuthContext";
+import { toast } from "sonner";
 
 const EditMenuItem = () => {
     const { id } = useParams();
@@ -70,10 +71,11 @@ const EditMenuItem = () => {
                 ...formValues,
                 price: parseFloat(formValues.price)
             };
-
+            console.log("MenuItemData to send:")
+            console.log(menuItemData)
             const result = await update(id, menuItemData);
             console.log('Success:', result);
-            alert("Menu item updated successfully!");
+            toast.success(`Item ${result.name} updated successfully`)
 
             navigate("/menu");
 

@@ -68,17 +68,32 @@ public class MenuItemRepositoryImpl implements MenuItemRepository {
 
     @Override
     public MenuItem updateMenuItem(MenuItem item) {
-        String sql = "UPDATE menu_items SET name = ?, description = ?, price = ?, spicy = ?, vegetarian = ?, image_url = ? WHERE id = ?";
-        jdbcTemplate.update(sql,
-                item.getName(),
-                item.getDescription(),
-                item.getPrice(),
-                item.getCategory(),
-                item.isSpicy(),
-                item.isVegetarian(),
-                item.getImageUrl(),
-                item.getId());
-        return item;
+        String sql = "UPDATE menu_items SET name = ?, description = ?, price = ?, category = ?, spicy = ?, vegetarian = ?, image_url = ? WHERE id = ?";
+        
+        try {
+            int rowsAffected = jdbcTemplate.update(sql,
+                    item.getName(),
+                    item.getDescription(),
+                    item.getPrice(),
+                    item.getCategory(),
+                    item.isSpicy(),
+                    item.isVegetarian(),
+                    item.getImageUrl(),
+                    item.getId());
+
+            System.out.println("Rows affected: " + rowsAffected);
+
+            if (rowsAffected == 0) {
+                throw new RuntimeException("User with ID " + item.getId() + " not found for update");
+            }
+            return item;
+        } catch (Exception e) {
+
+            System.out.println("repo update err: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-import { login, register, logout } from "../api/userApi";
+import { login, register, logout } from "../api/authApi";
 import { useAuthContext } from "../context/AuthContext";
 
 

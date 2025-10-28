@@ -3,6 +3,7 @@ package com.purlenki.server.controllers;
 import com.purlenki.server.model.User;
 import com.purlenki.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,17 +26,19 @@ public class UserController {
     public ResponseEntity<Page<User>> getUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String search) {
-        
+            @RequestParam(required = false) String search,
+            Authentication authentication) {
+
+        String currentUserEmail = authentication.getName();
         Pageable pageable = PageRequest.of(page, size);
         Page<User> users;
-        
+
         if (search != null && !search.trim().isEmpty()) {
-            users = userService.searchUsers(search, pageable);
+            users = userService.searchUsers(search, pageable, currentUserEmail);
         } else {
-            users = userService.getAllUsers(pageable);
+            users = userService.getAllUsers(pageable, currentUserEmail);
         }
-        
+
         return ResponseEntity.ok(users);
     }
 
@@ -57,11 +60,11 @@ public class UserController {
     public ResponseEntity<?> updateUserRole(
             @PathVariable Long id,
             @RequestBody Map<String, String> request) {
-        
+
         try {
             String roleStr = request.get("role");
             User.Role newRole = User.Role.valueOf(roleStr.toUpperCase());
-            
+
             User updatedUser = userService.updateUserRole(id, newRole);
             return ResponseEntity.ok(updatedUser);
         } catch (IllegalArgumentException e) {

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { getAccessToken } from "../../../util";
 import { useCreateFormValidation } from "../../../hooks/useCreateFormValidation";
 import { useForm } from "../../../hooks/useForm";
 import { create } from "../../../api/menu-api";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -20,7 +21,7 @@ const initialValues = {
 const CreateMenuItem = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState("");
-
+    const navigate = useNavigate();
     const { values, changeHandler, submitHandler } = useForm(initialValues, handleSubmit);
     const { errors, touched, handleBlur, markAllTouched, isFormValid } = useCreateFormValidation(values);
 
@@ -44,12 +45,8 @@ const CreateMenuItem = () => {
 
             const result = await create(menuItemData);
             // const result  = menuItemData
-            console.log(menuItemData)
-
-            console.log('Success:', result);
-            alert("Menu item created successfully!");
-            console.log("Form values:", formValues);
-
+            toast.success(`Item ${result.name} created successfully`)
+            navigate(`/menu/${result.id}`)
 
             Object.keys(initialValues).forEach(key => {
                 changeHandler({ target: { name: key, value: initialValues[key] } });

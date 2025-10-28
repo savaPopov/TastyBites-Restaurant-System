@@ -50,7 +50,7 @@ public class MenuService {
         if (id <= 0) {
             throw new RuntimeException("Invalid menu item ID: " + id);
         }
-        
+        // System.out.println("Item exists: " + existingItem.isPresent());
 
         Optional<MenuItem> existingItem = menuItemRepository.getMenuItemById(id);
         if (existingItem.isEmpty()) {
@@ -58,8 +58,12 @@ public class MenuService {
         }
 
         menuItem.setId(id);
+        System.out.println("Before Validation");
         validateMenuItem(menuItem);
+        System.out.println("AFter Validation");
+        System.out.println("BeforeDuplicateName");
         checkForDuplicateName(menuItem.getName(), id); 
+        System.out.println("AfterDuplicateName");
         
         return menuItemRepository.updateMenuItem(menuItem);
     }

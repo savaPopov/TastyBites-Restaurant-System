@@ -6,7 +6,9 @@ import './Details.css';
 import { getMenuItemById, remove } from '../../api/menu-api';
 import Spinner from '../Spinner/Spinner';
 import { useAuthContext } from '../../context/AuthContext';
-import DeleteMenuItemModal from '../Admin/DeleteMenuItemModal/DeleteMenuItemModal';
+import DeleteModal from '../Admin/DeleteModal/DeleteModal';
+import { toast } from 'sonner';
+
 
 const Details = () => {
     const { id } = useParams();
@@ -24,6 +26,7 @@ const Details = () => {
             await remove(id)
 
             navigate('/menu')
+            toast.success(`Deleted ${item.name} Successfully`)
             setModalOpen(false)
         } catch (err) {
             console.log(err.message)
@@ -177,7 +180,7 @@ const Details = () => {
                             </div>
                         )}
 
-                        <DeleteMenuItemModal isOpen={isModalOpen} itemName={item.name} onConfirm={deleteConfirmHandler} onCancel={() => setModalOpen(false)} />
+                        <DeleteModal isOpen={isModalOpen} itemName={item.name} itemType={"item"} onConfirm={deleteConfirmHandler} onCancel={() => setModalOpen(false)} />
 
                         {role !== 'ADMIN' &&
                             <div className="details-actions">

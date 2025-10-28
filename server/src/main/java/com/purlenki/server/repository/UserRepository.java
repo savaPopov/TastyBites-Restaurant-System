@@ -1,4 +1,5 @@
 package com.purlenki.server.repository;
+
 import com.purlenki.server.model.User;
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +10,9 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    Page<User> findAll(Pageable pageable);
+    Page<User> findAll(Pageable pageable, String excludeEmail);
 
-    Page<User> searchUsers(String keyword, Pageable pageable);
+    Page<User> searchUsers(String keyword, Pageable pageable, String excludeEmail);
 
     Optional<User> findById(Long id);
 
