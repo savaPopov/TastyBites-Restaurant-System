@@ -1,0 +1,315 @@
+.manage-users-page {
+    min-height: 100vh;
+    background: hsl(var(--background));
+  }
+  
+  .manage-users-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  /* Back Link */
+  .manage-users-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: hsl(var(--primary));
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: gap 0.2s;
+  }
+  
+  .manage-users-back-link:hover {
+    gap: 0.75rem;
+  }
+  
+  .manage-users-back-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  /* Header */
+  .manage-users-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .manage-users-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.5rem;
+  }
+  
+  .manage-users-subtitle {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Loading States */
+  .manage-users-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+    gap: 1rem;
+  }
+  
+  .manage-users-loading-text {
+    color: hsl(var(--muted-foreground));
+    font-size: 1.125rem;
+  }
+  
+  /* Search Bar */
+  .manage-users-search-container {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .manage-users-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+  
+  .manage-users-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: hsl(var(--foreground));
+    transition: all 0.2s ease;
+  }
+  
+  .manage-users-search-input:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  }
+  
+  .manage-users-search-input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Table */
+  .manage-users-table-container {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  
+  .manage-users-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .manage-users-table thead {
+    background: hsl(var(--muted));
+  }
+  
+  .manage-users-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  
+  .manage-users-table tbody tr {
+    border-bottom: 1px solid hsl(var(--border));
+    transition: background-color 0.2s ease;
+  }
+  
+  .manage-users-table tbody tr:hover {
+    background: hsl(var(--muted) / 0.5);
+  }
+  
+  .manage-users-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  .manage-users-table td {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .manage-users-empty-state {
+    text-align: center;
+    padding: 3rem 1rem !important;
+    color: hsl(var(--muted-foreground));
+    font-size: 1rem;
+  }
+  
+  /* Role Badge */
+  .manage-users-role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .manage-users-role-admin {
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary) / 0.2);
+  }
+  
+  .manage-users-role-user {
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+  
+  /* Action Buttons */
+  .manage-users-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .manage-users-action-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .manage-users-btn-delete:hover {
+    border-color: hsl(var(--destructive));
+    color: hsl(var(--destructive));
+    background: hsl(var(--destructive) / 0.1);
+  }
+  
+  /* Pagination */
+  .manage-users-pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .manage-users-pagination-info {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .manage-users-pagination-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .manage-users-page-size-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .manage-users-page-size-select {
+    padding: 0.5rem 0.75rem;
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.375rem;
+    color: hsl(var(--foreground));
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+  
+  .manage-users-page-size-select:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
+  }
+  
+  .manage-users-page-size-select:hover {
+    border-color: hsl(var(--primary));
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .manage-users-container {
+      padding: 1.5rem 1rem;
+    }
+  
+    .manage-users-header {
+      margin-bottom: 2rem;
+    }
+  
+    .manage-users-title {
+      font-size: 2rem;
+    }
+  
+    .manage-users-subtitle {
+      font-size: 1rem;
+    }
+  
+    .manage-users-table-container {
+      overflow-x: auto;
+    }
+  
+    .manage-users-table {
+      min-width: 800px;
+    }
+  
+    .manage-users-pagination-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .manage-users-pagination-info,
+    .manage-users-pagination-controls,
+    .manage-users-page-size-container {
+      justify-content: center;
+    }
+  
+    .manage-users-action-buttons {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .manage-users-title {
+      font-size: 1.75rem;
+    }
+  
+    .manage-users-search-input {
+      font-size: 0.875rem;
+      padding: 0.625rem 0.875rem 0.625rem 2.5rem;
+    }
+  
+    .manage-users-search-icon {
+      width: 1rem;
+      height: 1rem;
+      left: 0.875rem;
+    }
+  
+    .manage-users-table th,
+    .manage-users-table td {
+      padding: 0.75rem;
+      font-size: 0.8125rem;
+    }
+  }

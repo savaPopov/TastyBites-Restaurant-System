@@ -1,4 +1,3 @@
-
 import './components/Button.css'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
@@ -18,6 +17,8 @@ import AdminGuard from './components/common/AdminGuard'
 import GuestGuard from './components/common/GuestGuard'
 import EditMenuItem from './components/Admin/EditMenuItem/EditMenuItem'
 import UserGuard from './components/common/UserGuard'
+import UsersManagment from './components/Admin/ControlPanel/UsersManagment/UsersManagment'
+import { Toaster } from 'sonner';
 
 
 
@@ -40,11 +41,13 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Route>
 
-        
+
           {/* ADMIN ONLY */}
           <Route element={<AdminGuard />}>
             <Route path="/admin/controlPanel" element={<ControlPanel />} />
             <Route path="/edit/:id" element={<EditMenuItem />} />
+            <Route path="/admin/users" element={<UsersManagment />} />
+
           </Route>
           {/* USER ONLY */}
           <Route element={<UserGuard />}>
@@ -59,7 +62,35 @@ function App() {
         </Routes>
       </div>
       <Footer />
+
+      <Toaster
+        position="top-right"
+        duration={4000}
+        closeButton={true}
+        // richColors={true}
+        toastOptions={{
+          style: {
+            background: 'hsl(var(--background))',
+            color: 'hsl(var(--foreground))',
+            border: '1px solid hsl(var(--border))',
+            borderRadius: '8px',
+            fontSize: '14px',
+          },
+
+          success: {
+            style: {
+              border: '1px solid green',
+            },
+          },
+          error: {
+            style: {
+              border: '1px solid red',
+            },
+          },
+        }}
+      />
     </>
+
   )
 }
 

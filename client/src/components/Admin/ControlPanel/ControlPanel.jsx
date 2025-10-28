@@ -106,11 +106,12 @@ const ControlPanel = () => {
                 <div className="quick-actions">
                     <Link to="/admin/users" className="action-card">
                         <div className="action-icon action-icon-primary">
-                            <Users />
+                            <Users/>
                         </div>
                         <div className="action-content">
                             <h3 className="action-title">Manage Users</h3>
                             <p className="action-description">View and manage user accounts</p>
+
                         </div>
                     </Link>
 
